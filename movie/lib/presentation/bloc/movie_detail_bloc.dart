@@ -15,10 +15,12 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
 
   final GetMovieDetail _getMovieDetail;
   final GetMovieRecommendations getMovieRecommendations;
+  final GetWatchListStatus getWatchListStatus;
 
   MovieDetailBloc(
     this._getMovieDetail,
     this.getMovieRecommendations,
+    this.getWatchListStatus
     ) : super(MovieDetailEmpty());
 
 
@@ -32,6 +34,7 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       yield MovieDetailLoading();
       final result = await _getMovieDetail.execute(id);
       final recommendationResult = await getMovieRecommendations.execute(id);
+      final watchResult = await getWatchListStatus.execute(id);
 
       yield* result.fold(
         (failure) async* {
@@ -44,7 +47,7 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
               yield MovieRecommendationError(failure.message);
             },
             (recomData) async* {
-              yield MovieDetailHasData(data, recomData);
+              yield MovieDetailHasData(data, recomData, watchResult);
             }
           );
         },

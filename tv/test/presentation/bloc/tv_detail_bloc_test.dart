@@ -12,19 +12,23 @@ import 'tv_detail_bloc_test.mocks.dart';
 @GenerateMocks([  
   GetTvDetail,
   GetTvRecommendations,
+  GetWatchListStatusTv
   ])
 void main() {
   late TvDetailBloc detailBloc;
 
   late MockGetTvDetail mockGetTvDetail;
   late MockGetTvRecommendations mockGetTvRecommendations;
+  late MockGetWatchListStatusTv mockGetWatchListStatus;
  
   setUp(() {
     mockGetTvDetail = MockGetTvDetail();
     mockGetTvRecommendations = MockGetTvRecommendations();
+    mockGetWatchListStatus = MockGetWatchListStatusTv();
     detailBloc = TvDetailBloc(
       mockGetTvDetail,
       mockGetTvRecommendations,
+      mockGetWatchListStatus
     );
   });
 
@@ -41,6 +45,8 @@ void main() {
           .thenAnswer((_) async => Right(testTvDetail));
       when(mockGetTvRecommendations.execute(id))
           .thenAnswer((_) async => Right(testTvList));
+      when(mockGetWatchListStatus.execute(id))
+          .thenAnswer((_) async => false);
       return detailBloc;
     },
     act: (bloc) {
@@ -49,12 +55,12 @@ void main() {
     wait: const Duration(milliseconds: 100),
     expect: () => [
       TvDetailLoading(),
-      TvRecommendationLoading(),
-      TvDetailHasData(testTvDetail, testTvList),
+      TvDetailHasData(testTvDetail, testTvList, false),
     ],
     verify: (bloc) {
       verify(mockGetTvDetail.execute(id));
-      verify(mockGetTvRecommendations.execute(id));      
+      verify(mockGetTvRecommendations.execute(id)); 
+      verify(mockGetWatchListStatus.execute(id));        
     },
   );
 
@@ -65,6 +71,8 @@ void main() {
           .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
       when(mockGetTvRecommendations.execute(id))
           .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+      when(mockGetWatchListStatus.execute(id))
+          .thenAnswer((_) async => false);
       return detailBloc;
     },
     act: (bloc) => bloc.add(GetTvDetailData(id)),
@@ -75,6 +83,7 @@ void main() {
     verify: (bloc) {
       verify(mockGetTvDetail.execute(id));
       verify(mockGetTvRecommendations.execute(id));
+      verify(mockGetWatchListStatus.execute(id));   
     },
   );
 

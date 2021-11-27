@@ -15,10 +15,12 @@ class TvDetailBloc extends Bloc<TvDetailEvent, TvDetailState> {
 
   final GetTvDetail _getTvDetail;
   final GetTvRecommendations getTvRecommendations;
+  final GetWatchListStatusTv getWatchListStatus;
 
   TvDetailBloc(
     this._getTvDetail,
     this.getTvRecommendations,
+    this.getWatchListStatus
     ) : super(TvDetailEmpty());
 
   @override
@@ -31,6 +33,7 @@ class TvDetailBloc extends Bloc<TvDetailEvent, TvDetailState> {
       yield TvDetailLoading();
       final result = await _getTvDetail.execute(id);
       final recommendationResult = await getTvRecommendations.execute(id);
+      final watchResult = await getWatchListStatus.execute(id);
     
       yield* result.fold(
         (failure) async* {
@@ -42,7 +45,7 @@ class TvDetailBloc extends Bloc<TvDetailEvent, TvDetailState> {
               yield TvDetailError(failure.message);
             },
             (recomData) async* {
-              yield TvDetailHasData(data, recomData);
+              yield TvDetailHasData(data, recomData, watchResult);
             }
           );
         },

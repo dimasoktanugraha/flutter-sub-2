@@ -7,6 +7,7 @@ import 'package:core/data/repositories/movie_repository_impl.dart';
 import 'package:core/data/repositories/tv_repository_impl.dart';
 import 'package:core/domain/repositories/movie_repository.dart';
 import 'package:core/domain/repositories/tv_repository.dart';
+import 'package:core/utils/http_ssl_pinning.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:movie/movie.dart';
@@ -32,10 +33,12 @@ void init() {
     () => MovieDetailBloc(
       locator(),
       locator(),
+      locator(),
     ),
   );
   locator.registerFactory(
     () => TvDetailBloc(
+      locator(),
       locator(),
       locator(),
     ),
@@ -145,5 +148,5 @@ void init() {
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
 
   // external
-  locator.registerLazySingleton(() => http.Client());
+  locator.registerLazySingleton(() => HttpSSLPinning.client);
 }

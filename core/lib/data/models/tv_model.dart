@@ -34,19 +34,19 @@ class TvModel extends Equatable {
   final String originalName;
 
   factory TvModel.fromJson(Map<String, dynamic> json) => TvModel(
-        posterPath: json["poster_path"],
-        popularity: json["popularity"].toDouble(),
+        posterPath: json["poster_path"] == null ? "" : json["poster_path"],
+        popularity: json["popularity"] == null ? 0.0 : json["popularity"].toDouble(),
         id: json["id"],
-        backdropPath: json["backdrop_path"],
-        voteAverage: json["vote_average"].toDouble(),
-        overview: json["overview"],
-        firstAirDate: json["first_air_date"],
+        backdropPath: json["poster_path"] == null ? "" : json["backdrop_path"],
+        voteAverage: json["vote_average"] == null ? 0.0 : json["vote_average"].toDouble(),
+        overview: json["overview"] == null ? "" : json["overview"],
+        firstAirDate: json["first_air_date"] == null ? "" : json["first_air_date"],
         originCountry: List<String>.from(json["origin_country"].map((x) => x)),
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
-        originalLanguage: json["original_language"],
-        voteCount: json["vote_count"],
-        name: json["name"],
-        originalName: json["original_name"],
+        originalLanguage: json["original_language"] == null ? "" : json["original_language"],
+        voteCount: json["vote_count"] == null ? 0 : json["vote_count"],
+        name: json["name"] == null ? "" : json["name"],
+        originalName: json["original_name"] == null ? "" : json["original_name"],
       );
 
   Map<String, dynamic> toJson() => {

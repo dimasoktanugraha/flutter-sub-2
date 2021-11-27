@@ -12,20 +12,24 @@ import 'movie_detail_bloc_test.mocks.dart';
 @GenerateMocks([  
   GetMovieDetail,
   GetMovieRecommendations,
+  GetWatchListStatus
   ])
 void main() {
   late MovieDetailBloc detailBloc;
 
   late MockGetMovieDetail mockGetMovieDetail;
   late MockGetMovieRecommendations mockGetMovieRecommendations;
+  late MockGetWatchListStatus mockGetWatchListStatus;
  
   setUp(() {
     // listenerCallCount = 0;
     mockGetMovieDetail = MockGetMovieDetail();
     mockGetMovieRecommendations = MockGetMovieRecommendations();
+    mockGetWatchListStatus = MockGetWatchListStatus();
     detailBloc = MovieDetailBloc(
       mockGetMovieDetail,
       mockGetMovieRecommendations,
+      mockGetWatchListStatus
     );
   });
 
@@ -42,6 +46,8 @@ void main() {
           .thenAnswer((_) async => Right(testMovieDetail));
       when(mockGetMovieRecommendations.execute(id))
           .thenAnswer((_) async => Right(testMovieList));
+      when(mockGetWatchListStatus.execute(id))
+          .thenAnswer((_) async => false);
       return detailBloc;
     },
     act: (bloc) {
@@ -51,11 +57,12 @@ void main() {
     expect: () => [
       MovieDetailLoading(),
       MovieRecommendationLoading(),
-      MovieDetailHasData(testMovieDetail, testMovieList),
+      MovieDetailHasData(testMovieDetail, testMovieList, false),
     ],
     verify: (bloc) {
       verify(mockGetMovieDetail.execute(id));
-      verify(mockGetMovieRecommendations.execute(id));      
+      verify(mockGetMovieRecommendations.execute(id));
+      verify(mockGetWatchListStatus.execute(id));       
     },
   );
 
@@ -66,6 +73,8 @@ void main() {
           .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
       when(mockGetMovieRecommendations.execute(id))
           .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+      when(mockGetWatchListStatus.execute(id))
+          .thenAnswer((_) async => false);
       return detailBloc;
     },
     act: (bloc) => bloc.add(GetMovieDetailData(id)),
@@ -76,6 +85,7 @@ void main() {
     verify: (bloc) {
       verify(mockGetMovieDetail.execute(id));
       verify(mockGetMovieRecommendations.execute(id));
+      verify(mockGetWatchListStatus.execute(id));     
     },
   );
 

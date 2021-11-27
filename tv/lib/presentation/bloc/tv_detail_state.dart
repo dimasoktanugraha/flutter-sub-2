@@ -36,9 +36,10 @@ class TvRecommendationError extends TvDetailState {
 class TvDetailHasData extends TvDetailState {
   final TvDetail result;
   final List<Tv> recommendation;
+  final bool isAdded;
 
-  TvDetailHasData(this.result, this.recommendation);
+  TvDetailHasData(this.result, this.recommendation, this.isAdded);
  
   @override
-  List<Object> get props => [result, recommendation];
+  List<Object> get props => [result, recommendation, isAdded];
 }

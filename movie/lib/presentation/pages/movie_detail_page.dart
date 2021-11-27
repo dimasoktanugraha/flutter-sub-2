@@ -46,8 +46,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
               child: DetailContent(
                 state.result,
                 state.recommendation,
-                // state.isAddedWatchlistStatus,
-                // isAddedWatchlist
+                state.isAdded
               ),
             );
           } else if (state is MovieDetailError){
@@ -67,28 +66,21 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 class DetailContent extends StatefulWidget {
   final MovieDetail movie;
   final List<Movie> recommendations;
+  final bool isAdded;
 
-  DetailContent(this.movie, this.recommendations
-  // this.isAddedWatchlist
-  );
+  DetailContent(this.movie, this.recommendations, this.isAdded);
 
   @override
   _DetailContentState createState() => _DetailContentState();
 }
 
 class _DetailContentState extends State<DetailContent> {
-  bool isAddedWatchlist = false;
+  late bool isAddedWatchlist;
 
   @override
   void initState() {
     super.initState();
-    context.read<WatchlistStatusMovieBloc>().add(IsMovieWatchlisted(widget.movie.id));
-    WatchlistStatusMovieState state = context.read<WatchlistStatusMovieBloc>().state;
-    if(state is WatchlistStatusMovie){
-      setState(() {
-        isAddedWatchlist = state.isWatchlisted;
-      });
-    }
+    isAddedWatchlist = widget.isAdded;
   }
 
   @override
@@ -131,19 +123,9 @@ class _DetailContentState extends State<DetailContent> {
                               widget.movie.title,
                               style: kHeading5,
                             ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                if (!isAddedWatchlist) {
-                                  context.read<WatchlistStatusMovieBloc>().add(AddMovieWatchlist(widget.movie));
-                                  print("added");
-                                } else {
-                                  context.read<WatchlistStatusMovieBloc>().add(RemoveMovieWatchlist(widget.movie));
-                                  print("remove");
-                                }
-                                WatchlistStatusMovieState state = context.read<WatchlistStatusMovieBloc>().state;
-                                
+                            BlocListener<WatchlistStatusMovieBloc, WatchlistStatusMovieState>(
+                              listener: (context, state) {
                                 if(state is WatchlistMessageMovie){
-                                  print(state.message);
                                   if (state.message == WatchlistStatusMovieBloc.watchlistAddSuccessMessage) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(content: Text(state.message)));
@@ -156,17 +138,8 @@ class _DetailContentState extends State<DetailContent> {
                                     setState(() {
                                       isAddedWatchlist = false;
                                     });
-                                  } else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            content: Text(state.message),
-                                          );
-                                        });
-                                  }                      
+                                  }
                                 }else if(state is WatchlistStatusMovieError){
-                                  print(state.message);
                                   showDialog(
                                     context: context,
                                     builder: (context) {
@@ -175,8 +148,14 @@ class _DetailContentState extends State<DetailContent> {
                                       );
                                     });
                                 }
-
-                                
+                              },
+                              child: Container(),
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                isAddedWatchlist
+                                  ? context.read<WatchlistStatusMovieBloc>().add(RemoveMovieWatchlist(widget.movie))
+                                  : context.read<WatchlistStatusMovieBloc>().add(AddMovieWatchlist(widget.movie));
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,

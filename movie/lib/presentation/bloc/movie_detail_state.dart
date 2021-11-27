@@ -36,9 +36,10 @@ class MovieRecommendationError extends MovieDetailState {
 class MovieDetailHasData extends MovieDetailState {
   final MovieDetail result;
   final List<Movie> recommendation;
+  final bool isAdded;
 
-  MovieDetailHasData(this.result, this.recommendation);
+  MovieDetailHasData(this.result, this.recommendation, this.isAdded);
  
   @override
-  List<Object> get props => [result, recommendation];
+  List<Object> get props => [result, recommendation, isAdded];
 }

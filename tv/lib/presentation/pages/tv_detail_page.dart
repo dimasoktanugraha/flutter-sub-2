@@ -42,6 +42,7 @@ class _TvDetailPageState extends State<TvDetailPage> {
               child: DetailContent(
                 state.result,
                 state.recommendation,
+                state.isAdded
               ),
             );
           } else if (state is TvDetailError){
@@ -61,27 +62,21 @@ class _TvDetailPageState extends State<TvDetailPage> {
 class DetailContent extends StatefulWidget {
   final TvDetail tv;
   final List<Tv> recommendations;
+  final bool isAdded;
 
-  DetailContent(this.tv, this.recommendations
-  );
+  DetailContent(this.tv, this.recommendations, this.isAdded);
 
   @override
   _DetailContentState createState() => _DetailContentState();
 }
 
 class _DetailContentState extends State<DetailContent> {
-  bool isAddedWatchlist = false;
+  late bool isAddedWatchlist;
 
   @override
   void initState() {
     super.initState();
-    context.read<WatchlistStatusTvBloc>().add(IsTvWatchlisted(widget.tv.id));
-    WatchlistStatusTvState state = context.read<WatchlistStatusTvBloc>().state;
-    if(state is WatchlistStatusTv){
-      setState(() {
-        isAddedWatchlist = state.isWatchlisted;
-      });
-    }
+    isAddedWatchlist = widget.isAdded;
   }
 
   @override
@@ -124,19 +119,9 @@ class _DetailContentState extends State<DetailContent> {
                               widget.tv.name,
                               style: kHeading5,
                             ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                if (!isAddedWatchlist) {
-                                  context.read<WatchlistStatusTvBloc>().add(AddTvWatchlist(widget.tv));
-                                  print("added");
-                                } else {
-                                  context.read<WatchlistStatusTvBloc>().add(RemoveTvWatchlist(widget.tv));
-                                  print("remove");
-                                }
-                                WatchlistStatusTvState state = context.read<WatchlistStatusTvBloc>().state;
-
-                                if(state is WatchlistMessageTv){
-                                  print(state.message);
+                            BlocListener<WatchlistStatusTvBloc, WatchlistStatusTvState>(
+                              listener: (context, state) {
+                                if(state is WatchlistStatusTv){
                                   if (state.message == WatchlistStatusTvBloc.watchlistAddSuccessMessage) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(content: Text(state.message)));
@@ -149,17 +134,8 @@ class _DetailContentState extends State<DetailContent> {
                                     setState(() {
                                       isAddedWatchlist = false;
                                     });
-                                  } else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            content: Text(state.message),
-                                          );
-                                        });
-                                  }                      
+                                  }
                                 }else if(state is WatchlistStatusTvError){
-                                  print(state.message);
                                   showDialog(
                                     context: context,
                                     builder: (context) {
@@ -168,6 +144,14 @@ class _DetailContentState extends State<DetailContent> {
                                       );
                                     });
                                 }
+                              },
+                              child: Container(),
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                isAddedWatchlist
+                                  ? context.read<WatchlistStatusTvBloc>().add(RemoveTvWatchlist(widget.tv))
+                                  : context.read<WatchlistStatusTvBloc>().add(AddTvWatchlist(widget.tv));
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,

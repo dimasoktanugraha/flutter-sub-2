@@ -1,5 +1,6 @@
 import 'package:about/about.dart';
 import 'package:core/core.dart';
+import 'package:core/utils/http_ssl_pinning.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/movie.dart';
@@ -14,6 +15,7 @@ import 'package:tv/tv.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await HttpSSLPinning.init();
   di.init();
   runApp(MyApp());
 }

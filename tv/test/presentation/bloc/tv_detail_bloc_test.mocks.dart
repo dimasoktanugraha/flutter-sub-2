@@ -12,6 +12,7 @@ import 'package:dartz/dartz.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:tv/domain/usecases/get_tv_detail.dart' as _i4;
 import 'package:tv/domain/usecases/get_tv_recommendations.dart' as _i8;
+import 'package:tv/domain/usecases/get_watchlist_status_tv.dart' as _i10;
 
 // ignore_for_file: avoid_redundant_argument_values
 // ignore_for_file: avoid_setters_without_getters
@@ -66,6 +67,27 @@ class MockGetTvRecommendations extends _i1.Mock
               returnValue: Future<_i3.Either<_i6.Failure, List<_i9.Tv>>>.value(
                   _FakeEither_1<_i6.Failure, List<_i9.Tv>>()))
           as _i5.Future<_i3.Either<_i6.Failure, List<_i9.Tv>>>);
+  @override
+  String toString() => super.toString();
+}
+
+/// A class which mocks [GetWatchListStatusTv].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetWatchListStatusTv extends _i1.Mock
+    implements _i10.GetWatchListStatusTv {
+  MockGetWatchListStatusTv() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.TvRepository get repository =>
+      (super.noSuchMethod(Invocation.getter(#repository),
+          returnValue: _FakeTvRepository_0()) as _i2.TvRepository);
+  @override
+  _i5.Future<bool> execute(int? id) =>
+      (super.noSuchMethod(Invocation.method(#execute, [id]),
+          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
   @override
   String toString() => super.toString();
 }

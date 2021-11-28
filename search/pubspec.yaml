@@ -19,6 +19,8 @@ dependencies:
     path: ../movie
   flutter_bloc: ^7.2.0
   rxdart: ^0.27.1
+  firebase_core: ^1.6.0
+  firebase_crashlytics: ^2.3.0
 
 dev_dependencies:
   flutter_test:

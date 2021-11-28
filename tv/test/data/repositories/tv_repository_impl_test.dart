@@ -3,10 +3,7 @@ import 'dart:io';
 import 'package:core/utils/exception.dart';
 import 'package:core/utils/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:core/data/models/created_model.dart';
 import 'package:core/data/models/genre_model.dart';
-import 'package:core/data/models/language_model.dart';
-import 'package:core/data/models/network_model.dart';
 import 'package:core/data/models/season_model.dart';
 import 'package:core/data/models/tv_detail_model.dart';
 import 'package:core/data/models/tv_model.dart';
@@ -15,8 +12,8 @@ import 'package:core/domain/entities/tv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../../core/test/helpers/test_helper.mocks.dart';
 import '../../dummy_data/dummy_objects.dart';
+import '../../helpers/test_helper.mocks.dart';
 
 void main() {
   late TvRepositoryImpl repository;

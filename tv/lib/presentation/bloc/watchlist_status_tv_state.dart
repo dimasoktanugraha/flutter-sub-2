@@ -22,10 +22,18 @@ class WatchlistStatusTvError extends WatchlistStatusTvState {
  
 class WatchlistStatusTv extends WatchlistStatusTvState {
   final bool isWatchlisted;
-  final String message;
  
-  WatchlistStatusTv(this.isWatchlisted, this.message);
+  WatchlistStatusTv(this.isWatchlisted);
  
   @override
-  List<Object> get props => [isWatchlisted, message];
+  List<Object> get props => [isWatchlisted];
+}
+
+class WatchlistMessageTv extends WatchlistStatusTvState {
+  final String message;
+ 
+  WatchlistMessageTv(this.message);
+ 
+  @override
+  List<Object> get props => [message];
 }

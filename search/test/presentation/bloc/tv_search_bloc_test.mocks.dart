@@ -2,14 +2,13 @@
 // in search/test/presentation/bloc/tv_search_bloc_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
-import 'package:core/domain/entities/tv.dart' as _i7;
-import 'package:core/domain/repositories/tv_repository.dart' as _i2;
-import 'package:core/utils/failure.dart' as _i6;
-import 'package:dartz/dartz.dart' as _i3;
+import 'package:core/domain/entities/tv.dart' as _i6;
+import 'package:core/utils/failure.dart' as _i5;
+import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:search/domain/usecases/search_tvs.dart' as _i4;
+import 'package:search/domain/usecases/search_tvs.dart' as _i3;
 
 // ignore_for_file: avoid_redundant_argument_values
 // ignore_for_file: avoid_setters_without_getters
@@ -19,28 +18,22 @@ import 'package:search/domain/usecases/search_tvs.dart' as _i4;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
-class _FakeTvRepository_0 extends _i1.Fake implements _i2.TvRepository {}
-
-class _FakeEither_1<L, R> extends _i1.Fake implements _i3.Either<L, R> {}
+class _FakeEither_0<L, R> extends _i1.Fake implements _i2.Either<L, R> {}
 
 /// A class which mocks [SearchTvs].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSearchTvs extends _i1.Mock implements _i4.SearchTvs {
+class MockSearchTvs extends _i1.Mock implements _i3.SearchTvs {
   MockSearchTvs() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.TvRepository get repository =>
-      (super.noSuchMethod(Invocation.getter(#repository),
-          returnValue: _FakeTvRepository_0()) as _i2.TvRepository);
-  @override
-  _i5.Future<_i3.Either<_i6.Failure, List<_i7.Tv>>> execute(String? query) =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Tv>>> execute(String? query) =>
       (super.noSuchMethod(Invocation.method(#execute, [query]),
-              returnValue: Future<_i3.Either<_i6.Failure, List<_i7.Tv>>>.value(
-                  _FakeEither_1<_i6.Failure, List<_i7.Tv>>()))
-          as _i5.Future<_i3.Either<_i6.Failure, List<_i7.Tv>>>);
+              returnValue: Future<_i2.Either<_i5.Failure, List<_i6.Tv>>>.value(
+                  _FakeEither_0<_i5.Failure, List<_i6.Tv>>()))
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Tv>>>);
   @override
   String toString() => super.toString();
 }

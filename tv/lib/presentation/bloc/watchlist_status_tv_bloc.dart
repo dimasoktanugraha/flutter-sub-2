@@ -1,5 +1,4 @@
 import 'package:core/domain/entities/tv_detail.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:bloc/bloc.dart';
@@ -14,7 +13,6 @@ class WatchlistStatusTvBloc extends Bloc<WatchlistStatusTvEvent, WatchlistStatus
   
   static const watchlistAddSuccessMessage = 'Added to Watchlist Tv';
   static const watchlistRemoveSuccessMessage = 'Removed from Watchlist Tv';
-  static const watchlistInitilaMessage = 'Watchlist';
 
   final GetWatchListStatusTv getWatchListStatus;
   final SaveWatchlistTv saveWatchlist;
@@ -35,7 +33,7 @@ class WatchlistStatusTvBloc extends Bloc<WatchlistStatusTvEvent, WatchlistStatus
 
       yield WatchlistStatusTvLoading();
       final result = await getWatchListStatus.execute(id);
-      yield WatchlistStatusTv(result, watchlistInitilaMessage);
+      yield WatchlistStatusTv(result);
     } else if (event is AddTvWatchlist) {
       final tv = event.tv;
 
@@ -45,7 +43,7 @@ class WatchlistStatusTvBloc extends Bloc<WatchlistStatusTvEvent, WatchlistStatus
           yield WatchlistStatusTvError(failure.message);
         },
         (data) async* {
-          yield WatchlistStatusTv(true, data);
+          yield WatchlistMessageTv(data);
         },
       );
     } else if (event is RemoveTvWatchlist) {
@@ -57,7 +55,7 @@ class WatchlistStatusTvBloc extends Bloc<WatchlistStatusTvEvent, WatchlistStatus
           yield WatchlistStatusTvError(failure.message);
         },
         (data) async* {
-          yield WatchlistStatusTv(false, data);
+          yield WatchlistMessageTv(data);
         },
       );
     }  

@@ -1,6 +1,5 @@
 import 'package:core/domain/entities/movie.dart';
 import 'package:movie/domain/usecases/get_popular_movies.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:bloc/bloc.dart';

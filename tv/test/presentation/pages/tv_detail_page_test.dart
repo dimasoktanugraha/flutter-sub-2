@@ -6,8 +6,6 @@ import 'package:mockito/mockito.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tv/tv.dart';
 
-import '../../dummy_data/dummy_objects.dart';
-
 class MockTvDetailBloc extends MockBloc<TvDetailEvent, TvDetailState>
     implements TvDetailBloc {}
  

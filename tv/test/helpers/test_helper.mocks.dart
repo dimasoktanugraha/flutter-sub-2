@@ -6,21 +6,21 @@ import 'dart:async' as _i6;
 import 'dart:convert' as _i17;
 import 'dart:typed_data' as _i18;
 
-import 'package:core/core.dart' as _i11;
 import 'package:core/data/datasources/db/database_helper.dart' as _i5;
-import 'package:core/data/datasources/tv_local_data_source.dart' as _i16;
-import 'package:core/data/datasources/tv_remote_data_source.dart' as _i14;
 import 'package:core/data/models/movie_table.dart' as _i8;
 import 'package:core/data/models/tv_detail_model.dart' as _i3;
 import 'package:core/data/models/tv_model.dart' as _i15;
 import 'package:core/data/models/tv_table.dart' as _i9;
 import 'package:core/domain/entities/tv.dart' as _i12;
 import 'package:core/domain/entities/tv_detail.dart' as _i13;
-import 'package:core/domain/repositories/tv_repository.dart' as _i10;
+import 'package:core/utils/failure.dart' as _i11;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:http/http.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:sqflite/sqflite.dart' as _i7;
+import 'package:tv/data/datasources/tv_local_data_source.dart' as _i16;
+import 'package:tv/data/datasources/tv_remote_data_source.dart' as _i14;
+import 'package:tv/domain/repositories/tv_repository.dart' as _i10;
 
 // ignore_for_file: avoid_redundant_argument_values
 // ignore_for_file: avoid_setters_without_getters

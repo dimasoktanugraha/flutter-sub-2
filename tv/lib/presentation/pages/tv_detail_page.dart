@@ -121,7 +121,7 @@ class _DetailContentState extends State<DetailContent> {
                             ),
                             BlocListener<WatchlistStatusTvBloc, WatchlistStatusTvState>(
                               listener: (context, state) {
-                                if(state is WatchlistStatusTv){
+                                if(state is WatchlistMessageTv){
                                   if (state.message == WatchlistStatusTvBloc.watchlistAddSuccessMessage) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(content: Text(state.message)));

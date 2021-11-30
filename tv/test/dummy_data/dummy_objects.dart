@@ -1,8 +1,5 @@
 import 'package:core/data/models/tv_table.dart';
-import 'package:core/domain/entities/created.dart';
 import 'package:core/domain/entities/genre.dart';
-import 'package:core/domain/entities/language.dart';
-import 'package:core/domain/entities/network.dart';
 import 'package:core/domain/entities/season.dart';
 import 'package:core/domain/entities/tv.dart';
 import 'package:core/domain/entities/tv_detail.dart';

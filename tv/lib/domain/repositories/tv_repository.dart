@@ -1,8 +1,7 @@
 import 'package:core/domain/entities/tv.dart';
 import 'package:core/domain/entities/tv_detail.dart';
+import 'package:core/utils/failure.dart';
 import 'package:dartz/dartz.dart';
-
-import '../../core.dart';
 
 abstract class TvRepository {
   Future<Either<Failure, List<Tv>>> getNowPlayingTvs();
